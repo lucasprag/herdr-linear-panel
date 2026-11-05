@@ -48,7 +48,7 @@ export default class LinearPanel extends View {
       if (!this.busy && this.loadedKey && dataKey(readPrefs()) !== this.loadedKey) this.refresh(cx);
     });
     // keys.json / `herdr-app do`: linear-panel.refresh, .open:<ID>, .back,
-    // .help, .settings, .status, .search, .view:<name>.
+    // .help, .settings, .status, .search, .view:<name>, .add-view:<name>=<query>.
     cx.spawn(async (cx) => {
       for (;;) {
         const c = await nextCommand();
@@ -74,6 +74,27 @@ export default class LinearPanel extends View {
       if (v) writePrefs({ selected: v.id });
       this.page = "list";
     }
+    else if (name === "add-view" && arg.includes("=")) this.addView(arg);
+  }
+
+  // `add-view:<name>=<query>`: adds the view and selects it; a view with that
+  // name already gets the new query instead.
+  addView(arg) {
+    const eq = arg.indexOf("=");
+    const viewName = arg.slice(0, eq).trim();
+    const query = arg.slice(eq + 1).trim();
+    if (!viewName || !query) return;
+    const views = readPrefs().views;
+    const same = views.find((v) => v.name.toLowerCase() === viewName.toLowerCase());
+    if (same) {
+      writePrefs({ views: views.map((v) => (v === same ? { ...v, query } : v)), selected: same.id });
+    } else {
+      const base = viewName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "view";
+      let id = base;
+      for (let n = 2; views.some((v) => v.id === id); n++) id = `${base}-${n}`;
+      writePrefs({ views: [...views, { id, name: viewName, query }], selected: id });
+    }
+    this.page = "list";
   }
 
   // ---- the list's data -----------------------------------------------------

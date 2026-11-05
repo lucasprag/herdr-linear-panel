@@ -122,8 +122,12 @@ Avatars are cached in `~/.config/herdr-app/data/linear-panel/avatars`.
 
 `keys.json` can send these to the panel: `linear-panel.refresh`,
 `linear-panel.search`, `linear-panel.status`, `linear-panel.help`,
-`linear-panel.settings`, `linear-panel.back`, `linear-panel.view:<name>` and
-`linear-panel.open:<ID>` (for example `linear-panel.open:ENG-123`).
+`linear-panel.settings`, `linear-panel.back`, `linear-panel.view:<name>`,
+`linear-panel.open:<ID>` (for example `linear-panel.open:ENG-123`) and
+`linear-panel.add-view:<name>=<query>`, which adds a view (or changes the
+query of the view with that name) and selects it, e.g.
+`herdr-app do 'linear-panel.add-view:Platform=#ENG'`. Commands reach the
+panel only while it's in the shown layout.
 
 ## Development
 

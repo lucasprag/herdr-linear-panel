@@ -41,7 +41,7 @@ The panel fills a block, normally a side panel stack 368px wide, on the theme's 
 - **Write check:** the first time an issue page opens, the panel asks Linear whether the key can write (see Watch out). The page shows before the answer; until it's known, values aren't pickers.
 - **Settings:** edits stay in the form until Save; Cancel or back drops them. "Show priority" applies at once.
 - **Problems:** no `linear` or not logged in shows the first-run page. Linear unreachable keeps the last issues and shows the message in a `blocked` line under the header.
-- **Commands** (`keys.json` or `herdr-app do`): `linear-panel.refresh`, `.search`, `.status`, `.help`, `.settings`, `.back`, `.view:<name>`, `.open:<ID>`.
+- **Commands** (`keys.json` or `herdr-app do`): `linear-panel.refresh`, `.search`, `.status`, `.help`, `.settings`, `.back`, `.view:<name>`, `.open:<ID>`, `.add-view:<name>=<query>` (adds the view, or changes the query of the one with that name, and selects it).
 
 ## Built from
 
