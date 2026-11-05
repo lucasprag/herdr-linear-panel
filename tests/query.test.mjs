@@ -78,6 +78,7 @@ test("status tokens set the status and split at the issue level", () => {
     ],
   });
   assert.deepEqual(f("s:triage"), { state: { type: { eq: "triage" } } });
+  assert.deepEqual(f("s:canceled"), { state: { type: { in: ["canceled", "duplicate"] } } });
   assert.match(parseQuery("s:someday").error, /Unknown status/);
   assert.equal(parseQuery("@me").setsStatus, false);
 });
@@ -157,7 +158,8 @@ test("statusOf sorts states into buckets", () => {
   assert.equal(statusOf({ type: "started", name: "Code review" }), "review");
   assert.equal(statusOf({ type: "unstarted", name: "Todo" }), "todo");
   assert.equal(statusOf({ type: "completed", name: "Done" }), "done");
-  assert.equal(statusOf({ type: "canceled", name: "Duplicate" }), "canceled");
+  assert.equal(statusOf({ type: "canceled", name: "Canceled" }), "canceled");
+  assert.equal(statusOf({ type: "duplicate", name: "Duplicate" }), "canceled");
   assert.equal(statusOf({ type: "triage", name: "Triage" }), "triage");
   assert.equal(statusOf({ type: "backlog", name: "Backlog" }), "backlog");
 });

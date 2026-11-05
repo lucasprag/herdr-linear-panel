@@ -159,7 +159,7 @@ export function issuePage(view, t) {
   else if (!issue) body = div().px(14).py(12).text_size(12).text_color(t.dim).child("Loading issue…");
   else {
     const key = statusOf(issue.state);
-    const subs = issue.children?.nodes ?? [];
+    const subs = issue.subIssues?.nodes ?? [];
     const labels = issue.labels?.nodes ?? [];
     body = v_flex().id("lp-issue-body").flex_1().min_h(0).overflow_y_scrollbar().px(14).py(12).gap(14)
       .child(div().text_size(15).font_semibold().text_color(t.foreground).child(issue.title))

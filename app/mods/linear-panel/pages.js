@@ -120,7 +120,7 @@ export function helpPage(view, t) {
       .child(v_flex().border_t(1).border_color(t.border)
         .children(SYNTAX.map(([token, meaning], i) => h_flex().id(`lp-syntax-${i}`).py(6).gap(10).items_start()
           .border_b(1).border_color(t.border)
-          .child(div().w(132).flex_none().font_family("JetBrains Mono").text_size(11.5).text_color(t.foreground).child(token))
+          .child(div().w(150).flex_none().font_family("JetBrains Mono").text_size(11.5).text_color(t.foreground).child(token))
           .child(div().flex_1().min_w(0).text_size(12).text_color(t.muted).child(meaning)))))
       .child(div().text_size(11.5).text_color(t.dim).child(
         "Without s:, the Status dropdown picks the statuses. The search box filters the shown view by title as you type.")));

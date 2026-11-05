@@ -111,7 +111,7 @@ export async function issue(id) {
         ${ISSUE_FIELDS}
         description
         creator { ${USER} }
-        children(first: 100) { nodes { id identifier title state { id name type color } } }
+        subIssues: children(first: 100) { nodes { id identifier title state { id name type color } } }
       }
     }`,
     { id });

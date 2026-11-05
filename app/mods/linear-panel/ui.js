@@ -78,7 +78,7 @@ export function avatar(t, user, path, size = 18) {
     .child(name[0].toUpperCase()));
 }
 
-/** "3h", "2d", "Nov 3": how long ago. */
+/** "5m ago", "3h ago", "2d ago", or "Feb 10, 2026" past a month. */
 export function ago(iso) {
   const ms = Date.parse(iso);
   if (!ms) return "";
@@ -86,5 +86,9 @@ export function ago(iso) {
   if (s < 3600) return `${Math.max(1, Math.round(s / 60))}m ago`;
   if (s < 86400) return `${Math.round(s / 3600)}h ago`;
   if (s < 30 * 86400) return `${Math.round(s / 86400)}d ago`;
-  return new Date(ms).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  // By hand: the runtime ignores toLocaleDateString's options.
+  const d = new Date(ms);
+  return `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

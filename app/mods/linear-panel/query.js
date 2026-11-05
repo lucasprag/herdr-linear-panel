@@ -52,6 +52,7 @@ export const SYNTAX = [
 export function statusOf(state) {
   const type = state?.type;
   if (type === "started") return /review/i.test(state?.name ?? "") ? "review" : "progress";
+  if (type === "duplicate") return "canceled";
   for (const [key, t] of Object.entries(TYPE)) if (t === type) return key;
   return "todo";
 }
@@ -59,6 +60,8 @@ export function statusOf(state) {
 function bucketFilter(key) {
   if (key === "progress") return { and: [{ state: { type: { eq: "started" } } }, { state: { name: { notContainsIgnoreCase: "review" } } }] };
   if (key === "review") return { and: [{ state: { type: { eq: "started" } } }, { state: { name: { containsIgnoreCase: "review" } } }] };
+  // Duplicates are their own state type; they count as canceled.
+  if (key === "canceled") return { state: { type: { in: ["canceled", "duplicate"] } } };
   return { state: { type: { eq: TYPE[key] } } };
 }
 
