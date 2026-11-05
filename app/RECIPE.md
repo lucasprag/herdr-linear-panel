@@ -52,7 +52,7 @@ The panel fills a block, normally a side panel stack 368px wide, on the theme's 
 - **Settings** in shared state `linear-panel.prefs`: `{ views: [{id, name, query}], selected, statuses, subIssues, collapsed, showPriority }`. A 3-second timer compares them with what was loaded, so another copy's change reloads this one.
 - **`herdr` functions:** `exec`, `home`, `appHome`, `theme`, `shared`, `setShared`, `nextCommand`, `notify`, `run` (`tab.new` for "Log in in a new tab"). `cx.open_url`, `cx.write_to_clipboard`.
 - **`gpui-base`:** `v_flex`, `h_flex`, `InputState`/`Input`, `Popover` (the Status menu and the pickers).
-- **Icons:** all its own SVGs in the mod folder: seven status glyphs, five priority glyphs, chevrons (down, right, left, up), search, refresh, help, settings, plus, x, check, sub-issues, external, link, copy, trash, and `linear.svg` for a layout button.
+- **Icons:** all its own SVGs in the mod folder: seven status glyphs, five priority glyphs, chevrons (down, right, left, up), search, refresh, help, settings, plus, x, check, sub-issues, external, link, copy, trash, and, in `brand/`, Linear's own logomark for a layout button (`logo-light.svg` white for dark themes, `logo-dark.svg` for light ones), unchanged from linear.app/brand and shown with `image()` so it isn't recolored.
 
 ## Watch out
 

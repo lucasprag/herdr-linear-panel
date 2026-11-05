@@ -55,7 +55,11 @@ If it's missing or not logged in, the panel says how to fix it.
    run("layout.show", { id: "panel" });
    ```
 
-   `mods/linear-panel/linear.svg` is an icon for that button. Shipped layouts
+   For the button's icon, use Linear's logomark in `mods/linear-panel/brand/`,
+   unchanged and with `image()` (`svg()` would recolor it): `logo-light.svg`
+   (white) on dark themes, `logo-dark.svg` on light themes, e.g.
+   `image(`mods/linear-panel/brand/${light ? "logo-dark" : "logo-light"}.svg`)`
+   where `light` comes from the brightness of `theme().chrome`. Shipped layouts
    and mods are read-only, so clone them first (`layout.clone`, `mod.clone`).
 
 ## Views and queries
@@ -140,6 +144,13 @@ node --test
 ```
 
 `app/RECIPE.md` describes the panel for anyone rebuilding it from scratch.
+
+## Trademarks
+
+Linear and the Linear logo are trademarks of Linear. The logo files in
+`app/mods/linear-panel/brand/` come unchanged from Linear's brand assets
+(https://linear.app/brand) and aren't covered by the MIT license. This
+project isn't affiliated with or endorsed by Linear.
 
 ## License
 
