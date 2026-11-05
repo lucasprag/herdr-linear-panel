@@ -169,7 +169,7 @@ function issueLine(view, t, issue, showPriority) {
     .child(h_flex().flex_1().min_w(0).gap(6).items_center()
       .child(div().min_w(0).truncate().text_size(12.8).font_medium().text_color(t.foreground).child(issue.title))
       .when(Boolean(issue.parent), (el) => el.child(div().flex_none().text_size(11.5).text_color(t.dim).child(`in ${issue.parent.identifier}`))))
-    .when(Boolean(who), (el) => el.child(people(view, t, issue).tooltip(who)));
+    .when(Boolean(who), (el) => el.child(people(view, t, issue).id(`lp-who-${issue.id}`).tooltip(who)));
 }
 
 // Urgent first, no priority last, then the most recently updated.
