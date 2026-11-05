@@ -19,6 +19,7 @@ import { settingsPage, helpPage, setupPage, newDraftView } from "./pages.js";
 const REFRESH_MS = 2 * 60 * 1000; // gently: Herdr keeps hidden copies running
 const SYNC_MS = 3000; // notices prefs changed by another copy
 const SPIN_MS = 900;
+const LIST_AFTER_SAVE_MS = 3000; // Linear's reads lag a write by up to a second
 
 export default class LinearPanel extends View {
   init(_props, cx) {
@@ -262,17 +263,33 @@ export default class LinearPanel extends View {
     this.editError = null;
     cx.notify();
     cx.spawn(async (cx) => {
+      let saved;
       try {
-        await linear.updateIssue(issue.id, input);
-        this.saving = false;
-        this.loadIssue(cx);
-        this.refresh(cx);
+        saved = await linear.updateIssue(issue.id, input);
       } catch (e) {
         this.saving = false;
         this.editError = String(e?.message ?? e);
         if (/scope|permission|forbidden|read[- ]?only|not allowed/i.test(this.editError)) this.write = { state: "off", message: this.editError };
+        cx.notify();
+        return;
+      }
+      this.saving = false;
+      // Show Linear's answer to the update: reading the issue again right
+      // away can still return the old values.
+      const shown = this.detail?.issue;
+      if (saved && shown?.id === saved.id) this.detail.issue = { ...shown, ...saved };
+      else if (!saved && shown?.id === issue.id) this.loadIssue(cx);
+      if (saved) {
+        for (const r of Object.values(this.results)) {
+          if (r.issues) r.issues = r.issues.map((i) => (i.id === saved.id ? { ...i, ...saved } : i));
+        }
       }
       cx.notify();
+      if (saved) await this.fetchAvatars([saved.assignee, saved.delegate], cx);
+      // The lists again, for issues that moved in or out of a view, once
+      // Linear's reads have caught up.
+      await cx.sleep(LIST_AFTER_SAVE_MS);
+      this.refresh(cx);
     });
   }
 

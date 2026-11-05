@@ -136,14 +136,18 @@ export async function teamOptions(teamId) {
   };
 }
 
-/** Changes an issue's status, priority or assignee: input is IssueUpdateInput. */
+/** Changes an issue's status, priority or assignee: input is IssueUpdateInput.
+ *  Resolves with the issue as saved (its list fields), or null. Use this
+ *  answer, not a fresh read: a read right after the write can still return
+ *  the old values for a moment. */
 export async function updateIssue(id, input) {
   const data = await api(
     `mutation LinearPanelUpdate($id: String!, $input: IssueUpdateInput!) {
-      issueUpdate(id: $id, input: $input) { success }
+      issueUpdate(id: $id, input: $input) { success issue { ${ISSUE_FIELDS} } }
     }`,
     { id, input });
   if (!data?.issueUpdate?.success) throw new LinearError("graphql", "Linear didn't save the change.");
+  return data.issueUpdate.issue ?? null;
 }
 
 // The nil id names no issue, so this update can't change anything. Linear
