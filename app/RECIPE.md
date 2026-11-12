@@ -2,7 +2,7 @@
 
 A side panel that lists Linear issues next to your terminals. The person picks a view from a row of tabs (each a saved query such as `@me` or `s:triage`, with its issue count), narrows it with a search box, a Status dropdown and a Sub-issues toggle, and sees the issues grouped by status, one line each: identifier, status icon, title and the assignee's avatar. Clicking an issue pushes its details page: status, priority, assignee, delegate, team, project, cycle, parent, labels, sub-issues and the description, with buttons to open it in the browser or copy its link or identifier. When the Linear key can write, status, priority and assignee are pickers there. Everything goes through the `linear` CLI, which keeps the login.
 
-(No preview image is committed yet: a screenshot for `preview.png` should show a demo workspace, not real work issues.)
+![Linear panel](preview.png)
 
 ## What you see
 

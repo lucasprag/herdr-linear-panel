@@ -8,6 +8,11 @@ its issue count. Click an issue to see its details, open it in the browser or
 copy its link. If your Linear key can write, you can change its status,
 priority and assignee from there too.
 
+<p>
+  <img src="app/preview.png" width="400" alt="The issue list: the Me view grouped into In Progress, In Review and Todo">
+  <img src="screenshots/issue.png" width="400" alt="An issue's details page: status, priority, assignee, sub-issues and description">
+</p>
+
 ## Requirements
 
 - The Herdr app.
@@ -111,6 +116,8 @@ The panel refreshes when it opens, when you click refresh, and every two
 minutes.
 
 ## Settings
+
+<img src="screenshots/settings.png" width="400" alt="Settings: three views with their queries, and the Show priority option">
 
 Kept in Herdr's shared state under `linear-panel.prefs`, so they survive layout
 changes:
